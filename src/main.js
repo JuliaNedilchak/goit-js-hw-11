@@ -12,7 +12,7 @@ function onFormSubmit(e) {
   e.preventDefault();
   const name = e.target.elements.text.value;
   getImages(name);
-  loader.style.display = 'block';
+
   form.reset();
 }
 
@@ -21,16 +21,20 @@ function getImages(imageName) {
   const params = `?key=42244412-4baf4dd8f3efd9c6d484c6d30&q=${imageName}&image_type=photo&orientation=horizontal&safesearch=true`;
 
   const url = BASE_URL + params;
-
+  loader.style.display = 'block';
   return fetch(url)
     .then(res => res.json())
     .then(images => {
       if (images.hits.length === 0) {
+        gallery.innerHTML = '';
+        loader.style.display = 'none';
+
         iziToast.error({
           message:
             'Sorry, there are no images matching your search query. Please try again!',
         });
       } else {
+        loader.style.display = 'none';
         const markup = images.hits
           .map(image => {
             return `<li class="item"> <a class="gallery-link" href="${image.largeImageURL}">
@@ -52,7 +56,7 @@ function getImages(imageName) {
           .join('');
 
         gallery.innerHTML = markup;
-        loader.style.display = 'none';
+        //loader.style.display = 'none';
       }
       const lightbox = new SimpleLightbox('.gallery a', {
         captionsData: 'alt',
