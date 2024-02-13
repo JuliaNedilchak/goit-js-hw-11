@@ -60,7 +60,6 @@ function getImages(imageName) {
           .join('');
 
         gallery.innerHTML = markup;
-        //loader.style.display = 'none';
       }
       const lightbox = new SimpleLightbox('.gallery a', {
         captionsData: 'alt',
