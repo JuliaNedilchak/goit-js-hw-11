@@ -24,10 +24,7 @@ function getImages(imageName) {
   loader.style.display = 'block';
   return fetch(url)
     .then(res => res.json())
-    .catch(error => {
-      toastError(`Error: ${error}`);
-      throw error;
-    })
+
     .then(images => {
       if (images.hits.length === 0) {
         gallery.innerHTML = '';
@@ -66,5 +63,9 @@ function getImages(imageName) {
         captionDelay: 250,
       });
       lightbox.refresh();
+    })
+    .catch(error => {
+      toastError(`Error: ${error}`);
+      throw error;
     });
 }
